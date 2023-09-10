@@ -25,14 +25,24 @@
 #define H2PROFIT_H
 
 #include <cstdint>
-
+#include <string>  // Für die Verarbeitung von Zeichenketten
 #include "payment.h"
 
 namespace ProfitConditions
 {
-    payment_t FromBuilding( uint32_t building, int race );
-    payment_t FromArtifact( int );
-    payment_t FromMine( int );
+    payment_t FromBuilding(uint32_t building, int race);
+    payment_t FromArtifact(int);
+    payment_t FromMine(int);
+
+    // Funktion zur Abfrage des Token-Guthabens einer Adresse über Tatum
+    // und Hinzufügen des Differenzbetrags als Gold
+    void UpdateTokenBalanceAndAddGold(const std::string& address);
+
+    // Funktion zum Abrufen des gespeicherten Token-Guthabens einer Adresse
+    payment_t GetSavedTokenBalance(const std::string& address);
+
+    // Funktion zum Speichern des Token-Guthabens einer Adresse
+    void SaveTokenBalance(const std::string& address, const payment_t& balance);
 }
 
 #endif
