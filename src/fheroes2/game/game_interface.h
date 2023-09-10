@@ -36,6 +36,10 @@
 class Castle;
 class Heroes;
 
+struct WalletInfo {
+    std::string walletAddress;
+};
+
 namespace Maps
 {
     class Tiles;
