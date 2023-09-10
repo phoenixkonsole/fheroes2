@@ -92,7 +92,30 @@ namespace
         COUT( "Press " << Game::getHotKeyNameByEventId( Game::HotKeyEvent::MAIN_MENU_SETTINGS ) << " to open Game Settings." )
         COUT( "Press " << Game::getHotKeyNameByEventId( Game::HotKeyEvent::MAIN_MENU_QUIT ) << " or " << Game::getHotKeyNameByEventId( Game::HotKeyEvent::DEFAULT_CANCEL )
                        << " to Quit the game." )
+      // ...
+
+    // Funktion zur Eingabe und Speicherung der Wallet-Adresse
+    void EnterWalletAddress(std::string& walletAddress)
+    {
+        // Benutzer zur Eingabe der Adresse auffordern
+        std::cout << "Bitte geben Sie Ihre Wallet-Adresse ein: ";
+        std::cin >> walletAddress;
+
+        // Wallet-Adresse in einer Datei speichern (optional)
+        std::ofstream file("wallet_address.txt");
+        if (file.is_open())
+        {
+            file << walletAddress;
+            file.close();
+        }
+        else
+        {
+            std::cerr << "Fehler beim Speichern der Wallet-Adresse!" << std::endl;
+        }
+
+        std::cout << "Wallet-Adresse erfolgreich gespeichert." << std::endl;
     }
+
 }
 
 void Game::mainGameLoop( bool isFirstGameRun )
@@ -196,6 +219,23 @@ void Game::mainGameLoop( bool isFirstGameRun )
 }
 
 fheroes2::GameMode Game::MainMenu( bool isFirstGameRun )
+{
+    // ...
+
+    // Hier sollten Sie die Wallet-Adresse initialisieren und anzeigen
+    std::string walletAddress;
+    std::ifstream file("wallet_address.txt");
+    if (file.is_open())
+    {
+        std::getline(file, walletAddress);
+        file.close();
+    }
+    else
+    {
+        std::cout << "Keine gespeicherte Wallet-Adresse gefunden." << std::endl;
+        // Wenn keine Adresse gespeichert ist, den Benutzer zur Eingabe auffordern
+        EnterWalletAddress(walletAddress);
+    }
 {
     // Stop all sounds, but not the music
     AudioManager::stopSounds();
